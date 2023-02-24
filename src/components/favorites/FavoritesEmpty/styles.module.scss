@@ -1,0 +1,10 @@
+.container_favorites {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  justify-content: center;
+  align-items: center;
+  .card_item {
+    padding: 16;
+  }
+}
