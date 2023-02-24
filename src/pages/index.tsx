@@ -1,5 +1,4 @@
 import { NextPage, GetStaticProps } from 'next';
-import Image from 'next/image';
 import MainLayout from '@/components/layouts/MainLayout';
 import pokeApi from '@/config/api';
 import { Pokemon, PokemonListData } from '@/interfaces/pokemons';
@@ -12,12 +11,6 @@ interface Props {
 const Home: NextPage<Props> = ({ pokemons }) => {
   return (
     <MainLayout>
-      <Image
-        src="/images/banner_pokeapp.png"
-        height={100}
-        width={100}
-        alt={''}
-      />
       <PokemonList pokemons={pokemons} />
     </MainLayout>
   );
