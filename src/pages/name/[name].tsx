@@ -24,18 +24,36 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: pokemons151,
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 
 // `getStaticPaths` requires using `getStaticProps`
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-  const { data } = await pokeApi.get<PokemonDetailI>(`/pokemon/${name}`);
-  const pokemon = formatDataPokemon(data);
+  const convertName = name.toLowerCase();
+  let pokemon = null;
+  
+  try {
+    const { data } = await pokeApi.get<PokemonDetailI>(`/pokemon/${convertName}`);
+    pokemon = formatDataPokemon(data);
+  } catch (error) {
+    // TODO: do something
+  }
+
+  if(!pokemon){
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   return {
     // Passed to the page component as props
     props: { pokemon },
+    revalidate: 86400
   };
 };
 

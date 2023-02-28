@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Grid, Text, Image } from "@nextui-org/react";
-import MainLayout from "@/components/layouts/MainLayout";
+import confetti from "canvas-confetti";
 import { PokemonDetailI } from "@/interfaces/pokemons";
 import {
   addPokemonToFavorites,
   isPokemonInFavorites,
   removePokemonFromFavorites,
 } from "@/utils/pokemonsUtils";
-import confetti from "canvas-confetti";
+
+import styles from './styles.module.scss';
 
 interface Props {
   pokemon: PokemonDetailI;
 }
+
+const spritesSize = 100;
 
 const PokemonDetail = ({ pokemon }: Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -58,7 +61,7 @@ const PokemonDetail = ({ pokemon }: Props) => {
       <Grid xs={12} sm={8}>
         <Card>
           <Card.Header
-            css={{ display: "flex", justifyContent: "space-between" }}
+            className={styles.header_card}
           >
             <Text h1 transform="uppercase">
               {pokemon.name}
@@ -78,27 +81,27 @@ const PokemonDetail = ({ pokemon }: Props) => {
               <Image
                 src={pokemon.sprites.front_default}
                 alt={pokemon.name}
-                height={100}
-                width={100}
+                height={spritesSize}
+                width={spritesSize}
               />
               <Image
                 src={pokemon.sprites.back_default}
                 alt={pokemon.name}
-                height={100}
-                width={100}
+                height={spritesSize}
+                width={spritesSize}
               />
               <Image
                 src={pokemon.sprites.front_shiny}
                 alt={pokemon.name}
-                height={100}
-                width={100}
+                height={spritesSize}
+                width={spritesSize}
               />
 
               <Image
                 src={pokemon.sprites.back_shiny}
                 alt={pokemon.name}
-                height={100}
-                width={100}
+                height={spritesSize}
+                width={spritesSize}
               />
             </Container>
           </Card.Body>

@@ -24,18 +24,35 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: pokemons151 /*pokemons151.map((id) => ({ params: { id } })) */,
-    fallback: false, // can also be true or 'blocking'
+    fallback: 'blocking', // can also be true or 'blocking'
   };
 };
 
 // `getStaticPaths` requires using `getStaticProps`
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as { id: string | number };
-  const { data } = await pokeApi.get<PokemonDetailI>(`/pokemon/${id}`);
-  const pokemon = formatDataPokemon(data);
+  let pokemon = null;
+  try {
+    const { data } = await pokeApi.get<PokemonDetailI>(`/pokemon/${id}`);
+    pokemon = formatDataPokemon(data);
+  } catch(e) {
+     
+  }
+
+  if(!pokemon){
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+  
+
   return {
     // Passed to the page component as props
     props: { pokemon },
+    revalidate: 86400
   };
 };
 

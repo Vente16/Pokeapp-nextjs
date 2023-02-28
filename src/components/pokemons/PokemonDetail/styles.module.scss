@@ -1,0 +1,9 @@
+$small: 430px;
+
+.header_card {
+  display: flex; 
+  justify-content: space-between;
+  @media screen and (max-width: $small) {
+    flex-direction: column;
+  }
+}
